@@ -1,18 +1,20 @@
-# Title that quickly describes what this repo is providing
+# California community college board races data
 
-This is where you explain as briefly as possible what the data is and where it came from. It's also a good time to refer
-to the [Open Data Policy](https://docs.google.com/document/d/14w6OZ7Cw2cK6rLxac3DGc-ky0lryVs0A8uTvi8Hwo9Q/edit) as a
-guide for completing this repo.
+Most of California’s 73 community college districts have board of trustee seats up for election on November 5, 2024. But over half of these races are canceled due to a  lack of opposition. In at least one case, Trustee Area 4 of the Mendocino-Lake Community College District, no candidates filed for the race.
 
-In the "About" area of the repo, make sure to fill in a brief description, labels and a url to an example of how we used it. 
+CalMatters compiled the races and whether they were canceled into a database. Most of the information came from comparing two lists from individual counties:
+- List of offices up for election
+- List of qualified candidates
 
-## Installation and Use
+Most counties provide these lists on their election websites. In some cases, CalMatters contacted county election offices to clarify the status of races. This dataset does not include election results.
 
-Depending on the data, there may be additional steps required to use the data locally on someone's machine, including the installtion of frameworks or libraries, or the use of third-party vendors, like Google for GSheets. 
+Each board trustee area may cover portions of one or more counties. Only counties with open board seats were included.
 
 ## Data Dictionary
 
-Assuming a json, csv or GSheet data source, document each field and describe that the field is conveying, including any additional context that helps someone using this data understand pitfalls, cavaets and any other issues. Below is an example from Erica's [release](https://github.com/CalMatters/ev-zipcode-demographics-data) of her analysis of EV ownership data.  
+### districts-races.csv
+
+Each row refers to a community college district. The online-only district, which does not elect board seats, is excluded. 
 
 <table>
   <thead>
@@ -23,24 +25,88 @@ Assuming a json, csv or GSheet data source, document each field and describe tha
   </thead>
   <tbody>
     <tr>
-      <td>ZIP</td>
-      <td>
-        <p>ZIP code. Only ZIP codes with 2021 American Community Survey population data and at least 1,000 residents are
-          included. Used by the postal service, ZIP codes do not have exact persistent geographical boundaries. The
-          demographic data here comes from the Census Bureau's Zip Code Tabulation Areas, which are approximated by
-          addresses.</p>
+      <td>district</td>
+      <td>Unique name of community college district. Matches the field with the same name in <code>districts-by-county-races.csv</code>
       </td>
+    </tr>
+    <tr>
+      <td>counties</td>
+      <td>Counties that the district serves, each separated by a semicolon if there are multiple. Some counties do not have elections for the district this cycle</td>
+    </tr>
+    <tr>
+      <td>numColleges</td>
+      <td>Integer number of colleges in the district</td>
+    </tr>
+    <tr>
+      <td>numRacesOnBallot</td>
+      <td>Integer number of seats that will be voted on</td>
+    </tr>
+    <tr>
+      <td>numRacesCanceled</td>
+      <td>Integer number of seats that will not be voted on</td>
+    </tr>
+    <tr>
+      <td>linkBoard</td>
+      <td>Link to district’s board of trustees webpage</td>
+    </tr>
+  </tbody>
+</table>
+
+### districts-by-county-races.csv
+
+Each row refers to a combination of a community college district and a county it serves. For districts with races in multiple counties, there are multiple rows per district.
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>district</td>
+      <td>Name of community college district. Matches the field with the same name in <code>`districts-races.csv`</code>
+      </td>
+    </tr>
+    <tr>
+      <td>county</td>
+      <td>Name of county the race(s) are occurring in</td>
+    </tr>
+    <tr>
+      <td>racesOnBallot</td>
+      <td>List of trustee seats up for election that are on the ballot. Some are labeled as a number (“Trustee Area 1”) and some as letters (“Trustee Area A”). If there are multiple districts, each area is separated by a semicolon (“1; 3”). A few districts do not elect by geographic area, so their areas are denoted with the number of seats (“at large (3)”). Blank if all races were canceled</td>
+    </tr>
+    <tr>
+      <td>racesCanceled</td>
+      <td>List of trustee seats up for election that were canceled. Some are labeled as a number (“Trustee Area 1”) and some as letters (“Trustee Area A”). If there are multiple districts, each area is separated by a semicolon (“1; 3”). A few districts do not elect by geographic area, so their areas are denoted with the number of seats (“at large (3)”). Blank if all races are on the ballot</td>
+    </tr>
+    <tr>
+      <td>numRacesOnBallot</td>
+      <td>Integer number of seats that will be voted on in the county. Corresponds with the length of the list in <code>racesOnBallot</code></td>
+    </tr>
+     <tr>
+      <td>numRacesCanceled</td>
+      <td>Integer number of seats that will not be voted on in the county. Corresponds with the length of the list in the <code>racesCanceled</code> field</td>
+    </tr>
+    <tr>
+      <td>linkSource1</td>
+      <td>Link to county list of offices up for election on November 5, 2024, when available. A source of information for this row</td>
+    </tr>
+    <tr>
+      <td>linkSource2</td>
+      <td>Link to county list of qualified candidates for election on November 5, 2024 or list of canceled races, when available. A source of information for this row</td>
     </tr>
   </tbody>
 </table>
 
 ## Examples of Use
 
-- The initial story or project where this data was used
-- Additional uses internal or external
+- TK
 
 ## Data Use
 
-If you use this dataset, please mention it was collected, combined and cleaned by CalMatters. We would love to know how you used it, so feel free to [send us a message](<mailto:john@calmatters.org>) if you do. If you have any questions about this dataset, feel free to [contact us](<mailto:john@calmatters.org>) as well.
+If you use this dataset, please mention it was collected and cleaned by CalMatters. If you have any questions about this dataset, feel free to contact erica@calmatters.org.
 
-CalMatters is a nonpartisan, nonprofit journalism venture committed to explaining how California’s state Capitol works and why it matters.
+[CalMatters](https://calmatters.org/) is a nonpartisan, nonprofit journalism venture committed to explaining how California’s state Capitol works and why it matters.
+
