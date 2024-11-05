@@ -102,7 +102,7 @@ Each row refers to a combination of a community college district and a county it
 
 ## Examples of Use
 
-- TK
+This dataset powers the lookup tool in this story: “[Culture wars start to roil elections for California’s community college trustees](https://calmatters.org/education/higher-education/2024/11/california-community-college-3/)” by Adam Echelman and Erica Yee (published November 4, 2024).
 
 ## Data Use
 
